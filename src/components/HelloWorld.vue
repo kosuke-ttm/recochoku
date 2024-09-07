@@ -3,70 +3,71 @@ import { ref } from 'vue'
 
 defineProps({
   msg: String,
-})
+  bpm: Number,
+});
 
-const count = ref(0)
+// const count = ref(0)
 
-  // data() {
-  //     return {
-  //       audioSource: 'your-audio-file.mp3'  // 音声ファイルのパス
-  //     };
-  //   },
-  //   methods: {
-  //     playAudio() {
-  //       this.$refs.audio.play();
-  //     }
-  //   }
-  // };
+// data() {
+//     return {
+//       audioSource: 'your-audio-file.mp3'  // 音声ファイルのパス
+//     };
+//   },
+//   methods: {
+//     playAudio() {
+//       this.$refs.audio.play();
+//     }
+//   }
+// };
 
 </script>
 
 <template>
+  <v-app>
+    <Loading v-show="loading"></Loading>
+    <Home v-show="!loading"></Home>
+  </v-app>
+  
+  <div>
+    <div v-if="isLoading">
+      <vue-loading 
+        type="bars"
+        color="d9544e"
+        :size="{width: '50px', height: '50px'}"
+      ></vue-loading>
+    </div>    <div v-else> 
+      <div>{{ users }}</div>
+    </div>
+  </div>
+  <div class="beating">
+    <!-- heart-pulseアイコンを使用 -->
+    <font-awesome-icon :icon="['fas', 'heart-pulse']" />
+  </div>
+  <h1>Beat Searching...</h1>
   <h1>{{ msg }}</h1>
-
-  <div>
-    <audio ref="audio" :src="audioSource"></audio>
-    <button @click="playAudio">
-      <i class="fas fa-play"></i> <!-- 再生アイコン -->
-    </button>
-  </div>
-
-
+  <!-- <p>BPM is {{ props.bpm}}</p> -->
   <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
+    <!-- <button type="button" @click="count++">count is {{ count }}</button> -->
   </div>
   <div>
     <audio ref="audio" :src="audioSource"></audio>
-    <button @click="playAudio">再生</button>
+  </div>
+  <div>
   </div>
 
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+
+<!-- 固定フッター -->
+  <footer class="footer">
+    <button @click="handleClick('Folder')">Folder</button>
+    <button @click="handleClick('Beat')">Beat</button>
+    <button @click="handleClick('Setting')">Setting</button>
+  </footer>
+
 </template>
 
 <style scoped>
-@import '@fortawesome/fontawesome-free/css/all.css'; /* Font Awesomeをインポート */
-
-.read-the-docs {
-  color: #888;
-}
+@import '@fortawesome/fontawesome-free/css/all.css';
+/* Font Awesomeをインポート */
 
 button {
   font-size: 16px;
@@ -75,16 +76,52 @@ button {
   color: white;
   border: none;
   cursor: pointer;
-  display: flex;
+  display: block;
+  margin: auto;
   align-items: center;
   justify-content: center;
+}
+.beating {
+  font-size:10em;
 }
 
 button i {
   margin-right: 5px;
 }
 
+/* ボタンのスタイル */
+.footer button {
+  flex-grow: 1; /* ボタンをフッター幅いっぱいに広げる */
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 15px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border-right: 1px solid #333; /* ボタン間に線を入れる */
+}
+
+.footer button:last-child {
+  border-right: none; /* 最後のボタンは右側に線をなくす */
+}
+
 button:hover {
   background-color: #45a049;
+}
+
+/* 固定フッターのスタイル */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  justify-content: space-between; /* ボタンを間隔なしで横並びに */
+  align-items: center;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 </style>
