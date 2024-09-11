@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 defineProps({
+  msg: String,
   bpm: Number,
 });
 
@@ -10,13 +11,9 @@ defineProps({
 export default {
   methods: {
     handleClick() {
-      console.log('再生ボタンが押されました');
-      // 3秒後にLoading.vueへ遷移
-      setTimeout(() => {
-        this.$router.push({ name: 'Loading' });
-      }, 3000); // 3000ミリ秒 (3秒)
-    }
-  }
+      this.$router.push('/roading');
+    },
+  },
 };
 </script>
 
@@ -25,15 +22,12 @@ export default {
     <Loading v-show="loading"></Loading>
     <Home v-show="!loading"></Home>
   </v-app>
-  
+
   <div>
     <div v-if="isLoading">
-      <vue-loading 
-        type="bars"
-        color="d9544e"
-        :size="{width: '50px', height: '50px'}"
-      ></vue-loading>
-    </div>    <div v-else> 
+      <vue-loading type="bars" color="d9544e" :size="{ width: '50px', height: '50px' }"></vue-loading>
+    </div>
+    <div v-else>
       <div>{{ users }}</div>
     </div>
   </div>
@@ -41,23 +35,26 @@ export default {
     <!-- heart-pulseアイコンを使用 -->
     <font-awesome-icon :icon="['fas', 'heart-pulse']" />
   </div>
-  <h1>Beat Searching...</h1>
+  <h1>Start</h1>
   <h1>{{ msg }}</h1>
-  <!-- <p>BPM is {{ props.bpm}}</p> -->
-  <div class="card">
-    <!-- <button type="button" @click="count++">count is {{ count }}</button> -->
-  </div>
+
+
+  <!-- BPM入力フォーム -->
+
   <div>
-    <audio ref="audio" :src="audioSource"></audio>
-  </div>
-  <div>
-    <button @click="handleClick">
-      <font-awesome-icon :icon="['fas', 'play']" />
-    </button>
+    <form @submit="handleSubmit">
+      <label for="username">What's your BPM?</label>
+      <br>
+      <br>
+      <input type="text" id="username" v-model="username" />
+      <br>
+      <br>
+      <a href="http://localhost:5173/roading">Start</a>
+    </form>
   </div>
 
 
-<!-- 固定フッター -->
+  <!-- 固定フッター -->
   <footer class="footer">
     <button @click="handleClick('Folder')">Folder</button>
     <button @click="handleClick('Beat')">Beat</button>
@@ -82,8 +79,9 @@ button {
   align-items: center;
   justify-content: center;
 }
+
 .beating {
-  font-size:10em;
+  font-size: 10em;
 }
 
 button i {
@@ -92,18 +90,21 @@ button i {
 
 /* ボタンのスタイル */
 .footer button {
-  flex-grow: 1; /* ボタンをフッター幅いっぱいに広げる */
+  flex-grow: 1;
+  /* ボタンをフッター幅いっぱいに広げる */
   background-color: #333;
   color: white;
   border: none;
   padding: 15px 0;
   font-size: 16px;
   cursor: pointer;
-  border-right: 1px solid #333; /* ボタン間に線を入れる */
+  border-right: 1px solid #333;
+  /* ボタン間に線を入れる */
 }
 
 .footer button:last-child {
-  border-right: none; /* 最後のボタンは右側に線をなくす */
+  border-right: none;
+  /* 最後のボタンは右側に線をなくす */
 }
 
 button:hover {
@@ -120,7 +121,8 @@ button:hover {
   background-color: #333;
   color: white;
   text-align: center;
-  justify-content: space-between; /* ボタンを間隔なしで横並びに */
+  justify-content: space-between;
+  /* ボタンを間隔なしで横並びに */
   align-items: center;
   padding: 10px 0;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);

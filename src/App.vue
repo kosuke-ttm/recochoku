@@ -1,39 +1,29 @@
 <script setup>
+import { RouterView } from 'vue-router';
 import HelloWorld from './components/HelloWorld.vue'
+import Loading from './components/Loading.vue'
+import Start from './components/Start.vue'
+import { useRouter } from 'vue-router';
+console.log(useRouter())
 </script>
 
-<!-- <script>
-import Loading from '@/components/Loading'
-import Home from './views/Home'
+<script>
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      loading: true,
-    }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
-  },
-  components: {
-    Loading,
-    Home,
-  },
-};
-
-</script> -->
+</script>
 
 
 
 <template>
-  <v-app>
+  
+  <!-- <v-app>
     <Loading v-show="loading"></Loading>
     <Home v-show="!loading"></Home>
-  </v-app>
-  <HelloWorld bpm="123" />
+  </v-app> -->
+  
+  <!-- <Start /> -->
+  <!-- <HelloWorld bpm="123" /> -->
+  <RouterView></RouterView> 
+  <!-- <Loading bpm="123"/> -->
 </template>
 
 <style scoped>
